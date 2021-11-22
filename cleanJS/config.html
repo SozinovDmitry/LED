@@ -1,0 +1,282 @@
+<html>
+    <head>
+        <title>KVADDER</title>
+        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    </head>
+    <body>
+        <div class="adminPanel">
+            <div class="columns">
+                <div class="column is-two-thirds">
+                    <div class="container is-fullhd">
+                      <div class="notification  is-danger">
+                        <div class="select">
+                            <select id="selectFileName">
+                             
+                            </select>
+                        </div>
+                        <button class="button is-link ml-4" onclick="changeConfigFile()">Выбрать</button>
+                        <button class="button is-link ml-4" onclick="createMainFile()">Отобразить на сайте</button>
+						<button class="button is-link ml-4" onclick="document.location.href = 'index.html';">Перейти к сайту</button>
+                    </div>
+                        <div class="notification is-primary">
+                            <div class="select">
+                                <select id="selectGroup" onchange="addHeaderinCanvas()">
+                                  <option value="headerGroup">Заголовок</option>
+                                  <option value="strikeGroup">Перечеркнутый текст</option>
+                                  <option value="imgGroup">Изображение</option>
+                                  <option value="NotificationGroup">Уведомление</option>
+                                  <option value="BarGroup">Анимация загрузки</option>
+                                </select>
+                            </div>
+                            <button class="button is-link ml-4" onclick="addHeaderinCanvas()">Добавить</button>
+                        </div>
+                        <div id="canvasData">
+                          <div id="createdID"></div>
+
+                        </div>
+                       
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="field">
+                        <label class="label">JSON</label>
+                        <div class="control">
+                          <textarea class="textarea" id="textArea"  rows="30" placeholder="Textarea"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                      <label class="label" id="configurationFileName">Название конфигурационного файла</label>
+                      <div class="control">
+                        <input class="input" type="text" id="fileName" placeholder="Название файла">
+                      </div>
+                    </div>
+
+                    <div class="field is-grouped">
+                      <div class="control">
+                        <button class="button is-link" onclick="createConfigFile()">Создать файл</button>
+                      </div>
+                    </div>
+
+                </div>
+              </div>
+        </div>  
+
+        
+        <script src="jsonCreator.js"></script>
+
+        <script id ="BarGroup" type="text/html">
+                
+          <div class="field">
+            <label class="label">Время показа в мс (1000 мс - 1с)</label>
+            <div class="control">
+              <input class="input" type="text" id="barTimeOut" placeholder="МС">
+            </div>
+          </div>
+      
+                  
+          <div class="field">
+              <label class="label">Цвет</label>
+              <div class="control">
+                <div class="select">
+                  <select id="barType">
+                      <option>Нет</option>
+                      <option value="is-primary">Зеленый</option>
+                      <option value="is-danger">Тревога</option>
+                      <option value="is-dark">Черный</option>
+                      <option value="is-info">Синий</option>
+                  </select>
+                </div>
+              </div>
+          </div>
+      
+          <div class="field is-grouped">
+            <div class="control">
+              <button class="button is-link" onclick="createBar()">Добавить элемент</button>
+            </div>
+          </div>
+      </script>
+
+        <script id ="NotificationGroup" type="text/html">
+          <div class="field">
+              <label class="label">Сообщение</label>
+              <div class="control">
+                <textarea class="textarea" id="noteMessage" placeholder="Сообщение"></textarea>
+              </div>
+          </div>
+      
+          <div class="field">
+            <label class="label">Время показа в мс (1000 мс - 1с)</label>
+            <div class="control">
+              <input class="input" type="text" id="noteTimeOut" placeholder="МС">
+            </div>
+          </div>
+      
+                  
+          <div class="field">
+              <label class="label">Анимация</label>
+              <div class="control">
+                <div class="select">
+                  <select id="noteAnimation">
+                      <option>Нет</option>
+                      <option value="AppereanceAnim">Плавное появление</option>
+                      <option value="PulsingAnim">Пульсация</option>
+                      <option value="SlideInAnim">Эффект слайда</option>
+                  </select>
+                </div>
+              </div>
+          </div>
+      
+          <div class="field is-grouped">
+            <div class="control">
+              <button class="button is-link" onclick="createNote()">Добавить элемент</button>
+            </div>
+          </div>
+      </script>
+
+        <script id ="headerGroup" type="text/html">
+          <div class="field">
+              <label class="label">Сообщение</label>
+              <div class="control">
+                <textarea class="textarea" id="headerMessage" placeholder="Сообщение"></textarea>
+              </div>
+          </div>
+      
+          <div class="field">
+            <label class="label">Время показа в мс (1000 мс - 1с)</label>
+            <div class="control">
+              <input class="input" type="text" id="headerTimeOut" placeholder="МС">
+            </div>
+          </div>
+      
+          <div class="field">
+            <label class="label">Цвет</label>
+            <div class="control">
+              <div class="select">
+                <select id="headerColor">
+                    <option value="red">Красный</option>
+                    <option value="green">Зеленый</option>
+                    <option value="blue">Синий</option>
+                    <option value="orange">Оранжевый</option>
+                    <option value="black">Черный</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <div class="field">
+              <label class="label">Анимация</label>
+              <div class="control">
+                <div class="select">
+                  <select id="headerAnimation">
+                      <option>Нет</option>
+                      <option value="AppereanceAnim">Плавное появление</option>
+                      <option value="PulsingAnim">Пульсация</option>
+                      <option value="SlideInAnim">Эффект слайда</option>
+                  </select>
+                </div>
+              </div>
+          </div>
+      
+          <div class="field is-grouped">
+            <div class="control">
+              <button class="button is-link" onclick="createHeader()">Добавить элемент</button>
+            </div>
+          </div>
+      </script>
+
+      <script id ="strikeGroup" type="text/html">
+        <div class="field">
+            <label class="label">Перечеркнутое сообщение</label>
+            <div class="control">
+              <textarea class="textarea" id="strikeMessage" placeholder="Сообщение"></textarea>
+            </div>
+        </div>
+    
+        <div class="field">
+          <label class="label">Время показа в мс (1000 мс - 1с)</label>
+          <div class="control">
+            <input class="input" type="text" id="strikeTimeOut" placeholder="МС">
+          </div>
+        </div>
+    
+        <div class="field">
+          <label class="label">Цвет</label>
+          <div class="control">
+            <div class="select">
+              <select id="strikeColor">
+                  <option value="red">Красный</option>
+                  <option value="green">Зеленый</option>
+                  <option value="blue">Синий</option>
+                  <option value="orange">Оранжевый</option>
+                  <option value="black">Черный</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+            <label class="label">Анимация</label>
+            <div class="control">
+              <div class="select">
+                <select id="strikeAnimation">
+                    <option>Нет</option>
+                    <option value="AppereanceAnim">Плавное появление</option>
+                    <option value="PulsingAnim">Пульсация</option>
+                    <option value="SlideInAnim">Эффект слайда</option>
+                </select>
+              </div>
+            </div>
+        </div>
+    
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button is-link" onclick="createStrike()">Добавить элемент</button>
+          </div>
+        </div>
+    </script>
+
+    <script id ="imgGroup" type="text/html">
+        
+      <div class="field">
+        <label class="label">URL</label>
+        <div class="control">
+          <input class="input" type="text" id="imgURL" placeholder="path">
+        </div>
+      </div>
+  
+      
+      <div class="field">
+          <label class="label">Анимация</label>
+          <div class="control">
+            <div class="select">
+              <select id="imgAnimation">
+                  <option>Нет</option>
+                  <option value="AppereanceAnim">Плавное появление</option>
+                  <option value="PulsingAnim">Пульсация</option>
+                  <option value="SlideInAnim">Эффект слайда</option>
+              </select>
+            </div>
+          </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Время показа в мс (1000 мс - 1с)</label>
+        <div class="control">
+          <input class="input" type="text" id="imgTimeOut" placeholder="МС">
+        </div>
+      </div>
+  
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-link" onclick="createImage()">Добавить элемент</button>
+        </div>
+        
+      </div>
+  </script>
+
+    </body>
+</html>
+
+
